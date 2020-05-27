@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 // Providers
 import 'package:push_local/src/providers/push_notifications_provider.dart';
  
+// Vistas
+import 'package:push_local/src/pages/home_page.dart';
+import 'package:push_local/src/pages/mensaje_page.dart';
 void main() => runApp(MyApp());
  
 class MyApp extends StatefulWidget {
@@ -22,6 +25,14 @@ class _MyAppState extends State<MyApp> {
     final pushProvider = new PushNotificationProvider();
     pushProvider.initNotifications();
 
+    // Escuchando streams
+    pushProvider.mensajes.listen((argumento) { 
+      // Navegación con el push name
+      // Navigator.pushNamed(context, 'mensaje');
+      print('argumento del push');
+      print(argumento);
+    });
+
   }
 
   @override
@@ -29,16 +40,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Notificaciones Push Local',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Container(
-            child: Text('Hello World'),
-          ),
-        ),
-      ),
+      initialRoute: 'home',
+      routes: {
+        'home'    : (BuildContext context) => HomePage(),
+        'mensaje' : (BuildContext context) => MensajePage(),
+      },
     );
   }
 }
