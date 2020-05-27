@@ -35,6 +35,7 @@ class PushNotificationProvider {
     _firebaseMessaging.configure(
 
       // Se dispara cuando la aplicación está abierta (aquí se recibe la información)
+      // onMessage aplicación abierta
       onMessage: ( info ) async {
 
         print( '======= On Message ========' );
@@ -45,6 +46,8 @@ class PushNotificationProvider {
         if( Platform.isAndroid ) {
           //  ?? si no viene el argumento 'comida' enviar 'no-data'
           argumento = info['data']['comida'] ?? 'no-data' ;
+        } else {
+          argumento = info['comida'] ?? 'no-data-ios';
         }
 
         _mensajesStreamController.sink.add( argumento );
@@ -75,9 +78,12 @@ class PushNotificationProvider {
 
         // Determinando si es android o ios
         String argumento = 'no-data';
+
         if( Platform.isAndroid ) {
           //  ?? si no viene el argumento 'comida' enviar 'no-data'
           argumento = info['data']['comida'] ?? 'no-data' ;
+        } else {
+          argumento = info['comida'] ?? 'no-data-ios';
         }
 
         _mensajesStreamController.sink.add( argumento );
