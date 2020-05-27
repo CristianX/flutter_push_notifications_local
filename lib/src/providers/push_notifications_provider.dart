@@ -57,6 +57,8 @@ class PushNotificationProvider {
         print( '======= On Launch ========' );
         print( info );
 
+        
+
         // final notif = info['data']['comida'];
         // print( notif );
 
@@ -65,11 +67,20 @@ class PushNotificationProvider {
       // Cuando la aplicación se termino
       onResume: ( info ) async {
 
-        print( '======= On Launch ========' );
+        print( '======= On Resume ========' );
         print( info );
 
         // final notif = info['data']['comida'];
         // print( notif );
+
+        // Determinando si es android o ios
+        String argumento = 'no-data';
+        if( Platform.isAndroid ) {
+          //  ?? si no viene el argumento 'comida' enviar 'no-data'
+          argumento = info['data']['comida'] ?? 'no-data' ;
+        }
+
+        _mensajesStreamController.sink.add( argumento );
 
 
       }
